@@ -4,13 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+i have used Provider.http for decoding the JSON file and not much things are used 
+the Weather api is called and the image is not png but i didnt edit it to make it a better border
+also there seems to be 1/2 seconds of error scrren shown when the api is not fetched so i couldnt find a solution to it 
+and i try to meet the requirement of the task
