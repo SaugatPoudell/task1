@@ -1,17 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
-import 'dart:ui';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task1/MyHomePage.dart';
-import 'package:task1/main.dart';
 import 'skip.dart';
 
 
@@ -31,6 +25,7 @@ class _HelpScreenState extends State<HelpScreen> {
        Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MyHomePage()),
+        //time duration that forwards to the another page Homepage after 5 seconds
       );
     });
     return MultiProvider(
@@ -38,7 +33,7 @@ class _HelpScreenState extends State<HelpScreen> {
         ChangeNotifierProvider<Skip>(create: (_) => Skip()),
     ],
       child: Scaffold(
-        appBar: AppBar(title: Text("We Show Weather "),
+        appBar: AppBar(title: Center(child: Text("We Show Weather ")),
         ),
          body:Stack(
            children:[ Container
@@ -46,6 +41,7 @@ class _HelpScreenState extends State<HelpScreen> {
             decoration:const BoxDecoration(
             image:DecorationImage(
               image:AssetImage('assets/images/1.png',
+              //image of the border 
               ),
               scale:1.0,
               fit:BoxFit.cover,
@@ -66,6 +62,7 @@ class _HelpScreenState extends State<HelpScreen> {
             onPressed: ()
             {
                 Skip.SkippedSender();
+                //Determining skipped is pressed or not
             },
           child: Text('Skip'),),
         );

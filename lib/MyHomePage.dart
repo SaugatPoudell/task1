@@ -1,20 +1,14 @@
-// import 'dart:ffi';
-
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
-import 'dart:ui';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'HelpScreen.dart';
-import 'package:provider/provider.dart';
-import 'skip.dart';
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -75,17 +69,20 @@ Future<void> getData() async
   {
     final response = await http.get(Uri.parse("http://api.weatherapi.com/v1/current.json?key=1bc0383d81444b58b1432929200711&q=${position.latitude},${position.longitude}"));
     jsonData =jsonDecode(response.body);
+    //if text value is empty the defualt address of application is displayed
   }
   else
   {
     final response = await http.get(Uri.parse("http://api.weatherapi.com/v1/current.json?key=1bc0383d81444b58b1432929200711&q=$textValue"));
     jsonData =jsonDecode(response.body);
+    //text is filled then place entered is searched for the weather
   }
  if(jsonData.isNotEmpty) //try catch could be better options
  {
   setState(()
   {
     apicalled=true;
+    //to check if the api has been called or not
   });
 print(jsonData['location']['name']);
 print(jsonData['current']['temp_c']);
@@ -99,18 +96,13 @@ else
 }
 
 }
-//  double _currentLocation=0.0;
-//  double latitude=position.latitude;
  @override
   void initState() {
     
     // TODO: implement initState
     super.initState();
      _getLocation(); // getting location of the application 
-        getData(); //gettin the data of the entered value by the user
-        getSkipped(); //checking if the previous page is skipped or not
-         
-       
+        getData(); //getting weather of value entered by the user
   }
 
 
@@ -121,17 +113,18 @@ else
     return Scaffold(
       appBar: AppBar(
      
-       title: Text("HomePage"),
+       title: Center(child: Text("Homepage")),
        actions: [
         IconButton(onPressed: 
         (){
           Navigator.push(context,MaterialPageRoute(builder: (context)=>HelpScreen()));
         }, icon: Icon(Icons.cloud)
+        //icon at top that navigates to the help screen
         )
        ],
 
       ),
-      body: Center(
+      body:Center(
         child: Container(
           child: Column(mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,15 +137,14 @@ else
                     child: TextField(
                       onChanged: (value)
                       {
-                        // getData();
                         setState((){
                          textValue=value;
-                         print(textValue);
                         });
                       },
                       decoration: InputDecoration
                       (
-                        hintText: "Enter your Location",                    
+                        hintText: "Enter your Location", 
+                        //taking input from the user                   
                       ),
                     ),
                   ),
@@ -168,7 +160,7 @@ else
                   ElevatedButton(onPressed: (){
                     if(textValue.isNotEmpty)
                    { 
-                    getData();
+                    getData(); //getting weather of the entered address
                    }
                    else
                    {
@@ -185,6 +177,7 @@ else
                   }, child: Text
                   (
                     textValue.isEmpty?"Save":"Update",
+                    //valueof button based on empty or not 
                   ))
                 ],
               ),
@@ -200,6 +193,7 @@ else
                     height: 100.0,
                     width: 100.0,
                     jsonData['current']['condition']['icon'])
+                    //displaying the weather in home page
               ],
             )
           ],),
@@ -208,16 +202,5 @@ else
        
       );
   }
-
-
-
-
 }
 
-Future<bool> getSkipped() async {
- 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-bool skippedValue = prefs.getBool('Skipped')??false;
-return skippedValue;
-}// setting the value of skip 
