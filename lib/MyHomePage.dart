@@ -185,11 +185,10 @@ else
             SizedBox(height: 10.0),
             Column(
               children: [!apicalled&&textValue.isEmpty?
-                Text('Loading'):
-                Text(jsonData['location']['name']),
-                 Text('${jsonData['current']['temp_c']}°C'),
-                  Text(jsonData['current']['condition']['text']),
-                   Image.network(
+                Text(''):Text(jsonData['location']['name']),
+                 !apicalled&&textValue.isEmpty?Text(''):Text('${jsonData['current']['temp_c']}°C'),
+                  !apicalled&&textValue.isEmpty?Text(''):Text(jsonData['current']['condition']['text']),
+                   !apicalled&&textValue.isEmpty?Text(''):Image.network(
                     height: 100.0,
                     width: 100.0,
                     jsonData['current']['condition']['icon'])
